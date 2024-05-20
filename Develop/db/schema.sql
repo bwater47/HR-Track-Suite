@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS department_db;
-CREATE DATABASE department_db;
+DROP DATABASE IF EXISTS departments_db;
+CREATE DATABASE departments_db;
 
 \c departments_db
 
@@ -20,7 +20,8 @@ CREATE TABLE employees (
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    FOREIGN KEY (role_id) REFERENCES roles(id) 
+    FOREIGN KEY (role_id) REFERENCES roles(id),
+    ON DELETE SET NULL,
+    FOREIGN KEY (manager_id) REFERENCES manager(id)
     ON DELETE SET NULL
-    manager_id INTEGER NOT NULL
 );
