@@ -1,20 +1,20 @@
-INSERT INTO deparments (department_name)
-VALUES ('Dairy'),
-       ('Produce'),
-       ('Meat');
+INSERT INTO deparments (department_id, department_name)
+VALUES (1, 'Dairy'),
+       (2, 'Produce'),
+       (3, 'Meat');
 
-INSERT INTO roles (department_id, title, salary)
-VALUES (1, 'Dairy Manager', 100000),
-       (2, 'Produce Manager', 95000),
-       (3, 'Meat Manager', 110000),
-       (4, 'Dairy Associate', 40000),
-       (5, 'Produce Associate', 37500),
-       (6, 'Meat Associate', 47500);
+INSERT INTO roles (title, salary)
+VALUES ('Dairy Manager', 100000),
+       ('Dairy Associate', 40000),
+       ('Produce Manager', 95000),
+       ('Produce Associate', 37500),
+       ('Meat Manager', 110000),
+       ('Meat Associate', 47500);
 
-INSERT INTO employees (manager_id, role_id, first_name, last_name)
-VALUES (01, 001, 'Joshua', 'Carter'),
-       (02, 002, 'Bobby', 'Hamper'),
-       (03, 003, 'Terry', 'Lane'),
-       (04, 004, 'Lisa', 'Sheldon'),
-       (05, 005, 'Sherry', 'Gingham'),
-       (06, 006, 'Petricia', 'Reynolds');
+INSERT INTO employees (first_name, last_name, manager_id, role_id)
+VALUES ('Joshua', 'Carter', 01, 001),
+       ('Bobby', 'Hamper', 02, 002),
+       ('Terry', 'Lane', 03, 003),
+       ('Lisa', 'Sheldon', 04, 004),
+       ('Sherry', 'Gingham', 05, 005),
+       ('Petricia', 'Reynolds', 06, 006);
