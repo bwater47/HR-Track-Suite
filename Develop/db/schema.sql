@@ -17,17 +17,20 @@ CREATE TABLE roles (
     id SERIAL PRIMARY KEY,
     title VARCHAR(30) UNIQUE NOT NULL,
     salary DECIMAL NOT NULL,
+    deparment_id INTEGER NOT NULL,
     FOREIGN KEY (deparment_id)
     REFERENCES departments(id)
     ON DELETE SET NULL
 );
-
+-- add do $$ begin delcare and end $$ to the tables.
 CREATE TABLE employees (
     id SERIAL PRIMARY KEY,
     first_name VARCHAR(30) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    FOREIGN KEY (role_id) 
-    REFERENCES roles (role_id)
-    FOREIGN KEY (manager_id) 
-    REFERENCES employees (employee_id),
+    role_id INTEGER NOT NULL,
+    manager_id INTEGER,
+    FOREIGN KEY (role_id)
+    REFERENCES roles (id),
+    FOREIGN KEY (manager_id)
+    REFERENCES employees (id)
 );
