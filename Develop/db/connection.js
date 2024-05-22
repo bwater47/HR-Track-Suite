@@ -16,7 +16,7 @@ client.query(`SELECT * FROM departments`, (err, res)=>{
     } else {
         console.log(err.message);
     }
-    client.end;
+    client.end();
 });
 
 module.exports = client;

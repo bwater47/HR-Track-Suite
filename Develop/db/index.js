@@ -11,14 +11,55 @@ class DB {
         } finally {
         client.release();
     }
+}};
+
+
+// Find all departments, roles, employees
+async function findAllDepartments() {
+    return this.query(
+        "SELECT department.id, department.name FROM department"
+    );
+};
+
+async function findAllRoles() {
+    return this.query(
+        "SELECT role.id, role.title, role.salary, department.name AS department FROM role JOIN department ON role.department_id = department.id"
+    );
+};
+
+async function findAllEmployees() {
+    return this.query(
+        "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, CONCAT(manager.first_name, ', ', manager.last_name) AS manager_name FROM employees JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id LEFT JOIN employees AS manager ON employee.manager_id = manager.id"
+    );
+}
+// Create a new department, role, employee
+async function createDepartment(department) {
+    return this.query(
+        "INSERT INTO department SET ?", department
+    );
+};
+
+async function createRole(role) {
+    return this.query(
+        "INSERT INTO role SET ?", role
+    );
 }
 
-// Find all employees, join with roles and departments to display their roles, salaries, departments, and 
-findAllEmployees() {
+async function createEmployee(employee) {
     return this.query(
-        "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department FROM employees JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id"
-    ); // concat seperate with commas manager first name and last name manager concat gets parents and then a comma quotes witha space in between them and another comma, and then manager last name and close parents and add the as like AS manager.name CONCAT(m.first_name, " " m.last_name) 
+        "INSERT INTO employee SET ?", employee
+    );
 }
+// Update an employee's role
+async function updateEmployeeRole(employeeId, roleId) {
+    return this.query(
+        "UPDATE employee SET role_id = ? WHERE id = ?", [roleId, employeeId]
+    );
+}
+// Export the database functions for use in the prompt questions
+module.exports = new DB();
+
+
 // use interpolation to add in the adding of things to prompt questions 
 // in the function for updating employee this function needs to update data base i need all roles make array to pass to the prompts 
 // bunch of handler functions to make for switch case now i can worry about 
