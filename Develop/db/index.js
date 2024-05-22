@@ -17,7 +17,7 @@ class DB {
 findAllEmployees() {
     return this.query(
         "SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department FROM employees JOIN role ON employee.role_id = role.id JOIN department ON role.department_id = department.id"
-    );
+    ); // concat seperate with commas manager first name and last name manager concat gets parents and then a comma quotes witha space in between them and another comma, and then manager last name and close parents and add the as like AS manager.name CONCAT(m.first_name, " " m.last_name) 
 }
 // use interpolation to add in the adding of things to prompt questions 
 // in the function for updating employee this function needs to update data base i need all roles make array to pass to the prompts 
