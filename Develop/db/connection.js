@@ -1,22 +1,12 @@
-const { Client } = require('pg')
-
-const client = new Client({
+// Require the pg module
+const { Pool } = require('pg')
+// Establish connection to the database
+const client = new Pool({
     host: "localhost",
     user: "postgres",
     port: 5432,
     password: "password",
     database: "employees_db"
 });
-
-client.connect();
-
-client.query(`SELECT * FROM departments`, (err, res)=>{
-    if(!err){
-        console.log(res.rows);
-    } else {
-        console.log(err.message);
-    }
-    client.end();
-});
-
+// Export the connection
 module.exports = client;
