@@ -27,7 +27,7 @@ function loadMainPrompts() {
         { name: "Add a role", value: "createRole" },
         { name: "Add an employee", value: "createEmployee" },
         { name: "Update an employee role", value: "updateEmployeeRole" },
-        { name: "exit", value: "exit" },
+        { name: "Exit", value: "exit" },
       ],
     },
     // Switch case for the user choice to run the corresponding function when the user selects an option
@@ -67,17 +67,6 @@ function loadMainPrompts() {
     }
   });
 }
-
-// seperate prompts
-// get switch to run stuff, and add dynamics
-// .then comes after the prompt prompt returns a promise so .then will execute after promise is resolved so after the question has been answered.
-// switch case for after this question then do what. sort of like you click this prompt for example then switch to this case if this function runs main
-// menu swithc case says run corresponding function then do all the things in there throw extra prompts snap boom back to main menu and it will start it over.
-// how would I connect this to a prompt.
-// choice will be value key will be the name of the object.
-// can actually throw if you do a look up have a function
-// ask question based on function get user data from what was wrote in prompt then return to main menu
-
 // Function to find all of the department table data
 function findAllDepartments() {
   console.log("Found all departments");
@@ -108,14 +97,6 @@ function findAllEmployees() {
     })
     .then(() => loadMainPrompts());
 }
-
-// having data from find all employees and show data to user with ascii art logo then call initial function again to ask all quesiton for what you want to do again that will be in the .then
-// make a function for each of the prompts
-// for the create ones you will need to prompt the user for the information to create the new thing
-// then call the db function to create the new thing
-// then call the main menu function again to ask the user what they want to do next
-// for the update one you will need to prompt the user for the information to update the employee role
-
 // Creates a department with the data from the user
 function createDepartment() {
   prompt([
@@ -125,9 +106,15 @@ function createDepartment() {
       message: "What is the name of the department?",
     },
   ]).then((data) => {
-    db.createDepartment([data.name]) // Wrap the department name in an array
-      .then(() => console.log("Department created"))
-      .then(() => loadMainPrompts());
+    db.createDepartment(data.name)
+      .then(() => {
+        console.log("Added department to the database");
+        loadMainPrompts();
+      })
+      .catch((err) => {
+        console.error("Error adding department", err);
+        loadMainPrompts();
+      });
   });
 }
 // Creates role with the data from the user
@@ -136,7 +123,7 @@ function createRole() {
     {
       type: "input",
       name: "title",
-      message: "What is the title of the role?",
+      message: "What is the name of the role?",
     },
     {
       type: "input",
@@ -146,8 +133,7 @@ function createRole() {
     {
       type: "input",
       name: "department_name",
-      message:
-        "What is the department that you would like to add this role to?",
+      message: "Which department does the role belong to?",
     },
   ]).then((data) => {
     db.createRole(data)
@@ -161,22 +147,39 @@ function createEmployee() {
     {
       type: "input",
       name: "first_name",
-      message: "What is the first name of the employee?",
+      message: "What is the employee's first name?",
     },
     {
       type: "input",
       name: "last_name",
-      message: "What is the last name of the employee?",
+      message: "What is the employee's last name?",
     },
     {
-      type: "input",
-      name: "role_id",
-      message: "What is the role id of the employee?",
+      type: "list",
+      name: "role_title",
+      message: "What is the employee's role?",
+      choices: [
+        "Dairy Manager",
+        "Dairy Associate",
+        "Produce Manager",
+        "Produce Associate",
+        "Meat Manager",
+        "Meat Associate",
+      ],
     },
     {
-      type: "input",
-      name: "manager_id",
-      message: "What is the manager id of the employee?",
+      type: "list",
+      name: "manager_name",
+      message: "Who is the employee's manager?",
+      choices: [
+        "None",
+        "Joshua Carter",
+        "Bobby Hamper",
+        "Terry Lane",
+        "Lisa Sheldon",
+        "Sherry Gingham",
+        "Petricia Reynolds",
+      ],
     },
   ]).then((data) => {
     db.createEmployee(data)
@@ -184,22 +187,52 @@ function createEmployee() {
       .then(() => loadMainPrompts());
   });
 }
-// Updates employee role with data from the user
+// Updates employee role with the data from the user
 function updateEmployeeRole() {
-  prompt([
+  const dataPromise = prompt([
     {
-      type: "input",
+      type: "list",
       name: "employeeId",
-      message: "What is the employee id?",
+      message: "Which employee's role do you want to update?",
+      choices: [
+        "Joshua Carter",
+        "Bobby Hamper",
+        "Terry Lane",
+        "Lisa Sheldon",
+        "Sherry Gingham",
+        "Petricia Reynolds",
+      ],
     },
     {
-      type: "input",
+      type: "list",
       name: "title",
-      message: "What is the title of the role?",
+      message: "Which role do you want to assign the selected employee?",
+      choices: [
+        "Dairy Manager",
+        "Dairy Associate",
+        "Produce Manager",
+        "Produce Associate",
+        "Meat Manager",
+        "Meat Associate",
+      ],
     },
-  ]).then((data) => {
-    db.updateEmployeeRole([data.employeeId, data.title])
-      .then(() => console.log("Employee role updated"))
-      .then(() => loadMainPrompts());
+  ]);
+
+  dataPromise.then((data) => {
+    console.log("Updating employee role...");
+    console.log("Employee ID:", data.employeeId);
+    console.log("New Role:", data.title);
+
+    db.updateEmployeeRole({
+      employee_name: data.employeeId,
+      role_title: data.title,
+    })
+      .then(() => {
+        console.log("Employee role updated successfully");
+        loadMainPrompts();
+      })
+      .catch((error) => {
+        console.error("Error updating employee role:", error);
+      });
   });
 }

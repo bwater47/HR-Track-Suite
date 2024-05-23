@@ -13,9 +13,9 @@ VALUES (1, 'Dairy Manager', 100000),
        (3, 'Meat Associate', 47500);
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
-VALUES ('Joshua', 'Carter', 1, 1),
-       ('Bobby', 'Hamper', 2, NULL),
-       ('Terry', 'Lane', 3, 2),
-       ('Lisa', 'Sheldon', 4, NULL),
-       ('Sherry', 'Gingham', 5, 3),
-       ('Petricia', 'Reynolds', 6, NULL);
+VALUES ('Joshua', 'Carter', 1, NULL),
+       ('Bobby', 'Hamper', 2, 1),
+       ('Terry', 'Lane', 3, NULL),
+       ('Lisa', 'Sheldon', 4, 3),
+       ('Sherry', 'Gingham', 5, NULL),
+       ('Petricia', 'Reynolds', 6, 5);
