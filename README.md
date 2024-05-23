@@ -29,9 +29,9 @@ The HR Track Suite is convienient for anyone needing something to help securely 
 
 - <strong>HR Track Suite Screenshots:</strong>
 
-![Screenshot1](./images/#.png)
-![Screenshot2](./images/#.png)
-![Screenshot3](./images/#.png)
+- ![Screenshot1](./Develop/images/OpeningMenu.png)
+- ![Screenshot2](./Develop/images/ViewTables.png)
+- ![Screenshot3](./Develop/images/AddsUpdates.png)
 
 ## Support
 
@@ -58,7 +58,7 @@ Contributing is allowed if you're in the U of U Coding Bootcamp. Contact us on t
 
 ## Authors and Acknowledgment
 
-Cloud application hosting for developers. Render. (05/19/24). https://dashboard.render.com/ 
+Documentation. PostgreSQL. (05/19/24). https://www.postgresql.org/docs/ 
 
 Routing. Express routing. (05/19/24). https://expressjs.com/en/guide/routing.html#express-router 
 
