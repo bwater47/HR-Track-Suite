@@ -8,11 +8,11 @@ init();
 // Display logo text for the , load main prompts
 function init() {
   const logoText = logo({ name: "H R Track Suite" }).render();
-
+// Console log the logo text and load the main prompts
   console.log(logoText);
   loadMainPrompts();
 }
-// Function to load the main prompts for the user to select what they would like to do
+// Function to load the main prompts for the user to select what they would like to do from the list of choices
 function loadMainPrompts() {
   prompt([
     {
@@ -30,7 +30,7 @@ function loadMainPrompts() {
         { name: "Exit", value: "exit" },
       ],
     },
-    // Switch case for the user choice to run the corresponding function when the user selects an option
+    // Switch case for the user choice to run the corresponding function because when the user selects an option the choice with the corresponding value will be run
   ]).then(async (userData) => {
     switch (userData.choice) {
       case "findAllDepartments":
@@ -62,6 +62,7 @@ function loadMainPrompts() {
         await updateEmployeeRole();
         break;
       default:
+        // If the user selects exit then the application will exit
         console.log("You have selected to exit the application");
         process.exit();
     }
@@ -69,12 +70,16 @@ function loadMainPrompts() {
 }
 // Function to find all of the department table data
 function findAllDepartments() {
+  // Console log that the function is running
   console.log("Found all departments");
+  // Call the findAllDepartments method from the db class
   db.findAllDepartments()
+  // Then destructure the rows from the result and console.table the departments
     .then(({ rows }) => {
       let departments = rows;
       console.table(departments);
     })
+    // Then load the main prompts
     .then(() => loadMainPrompts());
 }
 // Function to find all of the role table data
@@ -99,18 +104,22 @@ function findAllEmployees() {
 }
 // Creates a department with the data from the user
 function createDepartment() {
+  // Prompt the user for the name of the department
   prompt([
     {
       type: "input",
       name: "name",
       message: "What is the name of the department?",
     },
+    // Then create the department with the name response from the user
   ]).then((data) => {
     db.createDepartment(data.name)
+    // Then console log that the department was added to the database and load the main prompts
       .then(() => {
         console.log("Added department to the database");
         loadMainPrompts();
       })
+      // Catch any errors and console log the error and load the main prompts
       .catch((err) => {
         console.error("Error adding department", err);
         loadMainPrompts();
@@ -189,6 +198,7 @@ function createEmployee() {
 }
 // Updates employee role with the data from the user
 function updateEmployeeRole() {
+  // Prompt the user for the employee they would like to update and the new role they would like to assign
   const dataPromise = prompt([
     {
       type: "list",

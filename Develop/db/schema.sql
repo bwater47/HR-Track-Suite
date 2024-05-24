@@ -19,6 +19,7 @@ CREATE TABLE role (
     title VARCHAR(30) UNIQUE NOT NULL,
     salary DECIMAL NOT NULL,
     department_id INTEGER NOT NULL,
+    -- Creates a foreign key that references the "department" table's "id" column --
     FOREIGN KEY (department_id)
     REFERENCES department(id)
     ON DELETE SET NULL
@@ -30,8 +31,10 @@ CREATE TABLE employee (
     last_name VARCHAR(30) NOT NULL,
     role_id INTEGER NOT NULL,
     manager_id INTEGER,
+    -- Creates a foreign key that references the "role" table's "id" column --
     FOREIGN KEY (role_id)
     REFERENCES role (id),
+    -- Creates a foreign key that references the "employee" table's "id" column --
     FOREIGN KEY (manager_id)
     REFERENCES employee (id)
 );
