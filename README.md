@@ -27,6 +27,8 @@ You'll need to install GitBash, VS Code, Node.js, NPM inquirer, NPM pg, Express,
 
 The HR Track Suite is convienient for anyone needing something to help securely store employee data. Update your employee data so that it stays up to date easily from within the CLI.
 
+[HR Track Suite Video](https://drive.google.com/file/d/198AyyoxCXoNEa_RR2n_veZQDLGb9HLas/view?usp=drivesdk)
+
 - <strong>HR Track Suite Screenshots:</strong>
 
 - ![Screenshot1](./Develop/images/OpeningMenu.png)
